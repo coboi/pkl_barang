@@ -1,18 +1,19 @@
 <?php
 
+use App\Http\Controllers\Master\BarangC;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.index');
+})->name('home.index');
+
+Route::prefix('master')->group(function () {
+    Route::prefix('barang')->group(function () {
+        Route::get('/', [BarangC::class, 'index'])->name('master.barang.index');
+        Route::get('/create', [BarangC::class, 'create'])->name('master.barang.create');
+        Route::post('/store', [BarangC::class, 'store'])->name('master.barang.store');
+        Route::get('/show/{id}', [BarangC::class, 'show'])->name('master.barang.show');
+        Route::put('/update/{id}', [BarangC::class, 'update'])->name('master.barang.update');
+        Route::delete('/destroy/{id}', [BarangC::class, 'destroy'])->name('master.barang.destroy');
+    });
 });
